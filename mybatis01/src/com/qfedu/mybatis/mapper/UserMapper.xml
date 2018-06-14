@@ -8,6 +8,7 @@
 		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
 		<result column="dept_id" property="deptId" jdbcType="INTEGER"/>
 	</resultMap>
+	
 	<!-- statement -->
 	<select id="selectUser" parameterType="string" resultType="User">
 		select
