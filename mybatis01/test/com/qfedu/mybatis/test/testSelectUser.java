@@ -1,5 +1,7 @@
 package com.qfedu.mybatis.test;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -46,5 +48,31 @@ public class testSelectUser {
 		
 		sqlSession.close();
 	}
+	
+	@Test 
+	public void testSelectUserByUserName() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
 		
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		
+		List<User> userList = userMapper.selectUserByUserName("%三%");
+		sqlSession.close();
+		for(User u : userList) {
+			System.out.println(u);
+		}
+	}
+	
+	@Test 
+	public void testSelectUserByUserName2() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		
+		List<User> userList = userMapper.selectUserByUserName2("三");
+		sqlSession.close();
+		for(User u : userList) {
+			System.out.println(u);
+		}
+	}
+	
 }
