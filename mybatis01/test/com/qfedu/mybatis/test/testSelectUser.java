@@ -9,6 +9,19 @@ import com.qfedu.mybatis.utils.MyBatisUtil;
 
 public class testSelectUser {
 
+	@Test
+	public void testSelectUser2() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User user = userMapper.selectUser("1");
+		
+		session.close();
+		
+		System.out.println(user);
+		
+	}
 	
 	@Test
 	public void testSelectUserNoInterface() {
