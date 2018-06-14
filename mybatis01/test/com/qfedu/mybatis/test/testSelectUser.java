@@ -9,6 +9,7 @@ import com.qfedu.mybatis.utils.MyBatisUtil;
 
 public class testSelectUser {
 
+	
 	@Test
 	public void testSelectUserNoInterface() {
 		SqlSession session = MyBatisUtil.getSqlSession();
