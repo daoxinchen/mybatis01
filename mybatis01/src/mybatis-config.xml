@@ -5,6 +5,9 @@
 <configuration>
 	<!-- 引入配置文件 -->
 	<properties resource="db.properties"></properties>
+	<settings>
+		<setting name="useGeneratedKeys" value="true"/>
+	</settings>
 	
 	<!-- 定义别名 -->
 	<typeAliases>
@@ -28,4 +31,5 @@
 		<!-- <mapper resource="com/qfedu/mybatis/mapper/UserMapper.xml"/> -->
 		<package name="com.qfedu.mybatis.mapper"/>
 	</mappers>
+	
 </configuration>

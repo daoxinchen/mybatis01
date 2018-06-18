@@ -9,6 +9,14 @@ public class User {
 	
 	public User() {
 		super();
+		//this.id = (int)(Math.floor(Math.random()*100))+"";
+		this.id="33";
+		this.userName="默认";
+		this.age=3;
+		this.address="aaa";
+		this.deptId=1;
+		
+		
 	}
 	public String getId() {
 		return id;

@@ -7,8 +7,10 @@
 		<id column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
 		<result column="dept_id" property="deptId" jdbcType="INTEGER"/>
-	
 	</resultMap>
+	
+	<!-- CRUD -->
+	
 	<!-- statement -->
 	<select id="selectUser2" parameterType="string" resultMap="userResultMapper">
 		select * from user_c where id = {id}
@@ -31,9 +33,95 @@
 	<select id="selectUserByUserName2" parameterType="string" resultMap="userResultMapper">
 		select * from user_c where lower(user_name) like lower('%${value}%')
 	</select>
-<!-- 	
-	<insert id=""></insert>
-	<update id=""></update>
-	<delete id=""></delete>
--->
+	
+	<select id="selectUserByPage" resultMap="userResultMapper">
+		select * from user_c limit #{0},#{1}
+	</select>
+	<select id="selectUserByPage2" resultMap="userResultMapper">
+		select * from user_c limit #{offset},#{pagesize}
+	</select>
+	<select id="selectUserByPage3" resultMap="userResultMapper">
+		select * from user_c limit #{offset},#{pagesize}
+	</select>
+	
+	<!-- 因为mysql中id为string类型，不是主键自增，因此会报错，如数据库表为integer，则正确操作 -->
+	<insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id"> 
+		INSERT INTO mybatisdb.user_c (
+			id, 
+			user_name, 
+			age, 
+			address, 
+			dept_id
+		)
+		VALUES(
+			#{id}, 
+			#{userName}, 
+			#{age}, 
+			#{address}, 
+			#{deptId}
+		)
+	</insert>
+	
+	
+	<insert id="insertUserMysql" parameterType="User">
+		<selectKey resultType="java.lang.String" order="AFTER" keyProperty="id"><!-- resultType="java.lang.String" -->
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO mybatisdb.user_c (
+			id, 
+			user_name, 
+			age, 
+			address, 
+			dept_id
+		)
+		VALUES(
+			#{id}, 
+			#{userName}, 
+			#{age}, 
+			#{address}, 
+			#{deptId}
+		)	
+	</insert>
+	<update id="updateUser" parameterType="User">
+		UPDATE user_c 
+		SET
+		user_name = #{userName}, 
+		age = #{age} , 
+		address = #{address} , 
+		dept_id = #{deptId}
+		
+		WHERE
+		id = #{id} ;
+	</update>
+	<delete id="deleteUserById" parameterType="string">
+		delete from user_c where id = #{id}
+	</delete>
+	
+	<!--********************** 动态sql ************************-->
+	<select id="selectDeptUserByAddress" parameterType="string" resultMap="userResultMapper">
+		SELECT * FROM user_c 
+		WHERE dept_id = 1
+		<if test="value != null and value!=''">
+		AND address LIKE '%${value}%'
+		</if>
+	</select>
+	
+	<select id="selectDeptUserByAddressOrName" parameterType="User" resultMap="userResultMapper" >
+		SELECT * from user_c 
+		WHERE dept_id="1"
+		<choose>
+			<when test="address !=null && address !=''">
+				and lower(address) like lower(#{address})lower忽略大小写
+			</when>
+		</choose>
+		<choose>
+			<when test="user_name !=null && user_name !=''">
+				and user_name = #{userName}
+			</when>
+		</choose>
+		<otherwise>
+			and age > 50
+		</otherwise>
+	</select>
+	
 </mapper>
