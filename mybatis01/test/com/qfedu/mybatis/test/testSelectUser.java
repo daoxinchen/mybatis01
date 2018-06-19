@@ -242,14 +242,32 @@ public class testSelectUser {
 		UserMapper userMapper = session.getMapper(UserMapper.class);
 		
 		User u = new User();
-		u.setAddress("%江%");
-		u.setUserName("张居正");
+		u.setAddress("");
+		u.setUserName("");
 		
 		List<User> userList = userMapper.selectDeptUserByAddressOrName(u);
 		for (Iterator iterator = userList.iterator(); iterator.hasNext();) {
 			User user = (User) iterator.next();
 			System.out.println(user);
 		}
+	}
+	
+	@Test 
+	public void testSelectUserByCondition() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User u = new User();
+		u.setUserName("");
+		u.setAddress("%江%");
+		u.setDeptId(1);
+		
+		List<User> userList = userMapper.selectUserByCondition(u);
+		
+		for (User user : userList) {
+			System.out.println(user);
+		}
+		
 	}
 	
 }

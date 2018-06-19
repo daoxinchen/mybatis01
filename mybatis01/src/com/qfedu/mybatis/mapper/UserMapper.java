@@ -24,4 +24,6 @@ public interface UserMapper {
 	List<User> selectDeptUserByAddress(String address);
 	
 	List<User> selectDeptUserByAddressOrName(User user);
+	
+	List<User> selectUserByCondition(User user);
 }

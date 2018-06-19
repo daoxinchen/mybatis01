@@ -113,17 +113,28 @@
 			<when test="address!=null and address!=''">
 				and lower(address) like lower(#{address})<!-- lower忽略大小写 -->
 			</when>
-		</choose>
-		<choose>
 			<when test="userName !=null and userName !=''">
 				and user_name = #{userName}
 			</when>
-		</choose>
-		<choose>
 			<otherwise>
 				and age&lt;60
 			</otherwise>
 		</choose>
+	</select>
+	
+	<select id="selectUserByCondition" parameterType="User" resultMap="userResultMapper">
+		select * from user_c
+		<where>
+			<if test="userName !=null and userName !=''">
+				user_name = #{userName}
+			</if>
+			<if test="address !=null and address !=''">
+				and lower(address) like lower(#{address})
+			</if>
+			<if test="deptId !=null">
+				and dept_id = #{deptId}
+			</if>
+		</where>
 	</select>
 	
 </mapper>
