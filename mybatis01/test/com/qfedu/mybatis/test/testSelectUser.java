@@ -270,4 +270,57 @@ public class testSelectUser {
 		
 	}
 	
+	@Test 
+	public void testUpdateUserByCondition() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User u = new User();
+		u.setId("11");
+		u.setAge(20);
+		
+		int count = userMapper.updateUserByCondition(u);
+		
+		session.commit();
+		session.close();
+		System.out.println(u);
+		System.out.println("修改了"+count+"行");
+	}
+	
+	
+	
+	@Test 
+	public void testSelectUserByConditionTrim() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User u = new User();
+		u.setAddress("%江%");
+		u.setDeptId(1);
+		
+		List<User> userList = userMapper.selectUserByConditionTrim(u);
+		
+		for (User user : userList) {
+			System.out.println(user);
+		}
+		
+	}
+	
+	@Test 
+	public void testUpdateUserByConditionTrim() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User u = new User();
+		u.setId("11");
+		u.setAge(20);
+		
+		int count = userMapper.updateUserByConditionTrim(u);
+		
+		session.commit();
+		session.close();
+		System.out.println(u);
+		System.out.println("修改了"+count+"行");
+	}
+	
 }

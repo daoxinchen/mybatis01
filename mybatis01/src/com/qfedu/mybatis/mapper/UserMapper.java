@@ -26,4 +26,10 @@ public interface UserMapper {
 	List<User> selectDeptUserByAddressOrName(User user);
 	
 	List<User> selectUserByCondition(User user);
+	
+	int updateUserByCondition(User user);
+	
+	List<User> selectUserByConditionTrim(User user);
+	
+	int updateUserByConditionTrim(User user);
 }

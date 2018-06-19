@@ -136,5 +136,46 @@
 			</if>
 		</where>
 	</select>
+	<update id="updateUserByCondition" parameterType="User">
+		UPDATE user_c 
+		<set>
+			<if test="userName !=null">user_name = #{userName},</if> 
+			<if test="age !=null ">age = #{age} ,</if> 
+			<if test="address !=null">address = #{address} ,</if> 
+			<if test="deptId !=null">dept_id = #{deptId}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<select id="selectUserByConditionTrim" parameterType="User" resultMap="userResultMapper">
+		select * from user_c
+		<trim prefix="where" prefixOverrides="and | or"><!-- 最前面加个where,并且去掉最前面的and或者or -->
+			<if test="userName !=null and userName !=''">
+				user_name = #{userName}
+			</if>
+			<if test="address !=null and address !=''">
+				and lower(address) like lower(#{address})
+			</if>
+			<if test="deptId !=null">
+				and dept_id = #{deptId}
+			</if>
+		</trim>
+	</select>
+	<update id="updateUserByConditionTrim" parameterType="User">
+		UPDATE user_c 
+		<trim prefix="set" suffixOverrides=","  prefixOverrides="" suffix=""><!-- 最前面加set  去掉最后面的逗号 -->
+			<if test="userName !=null">user_name = #{userName},</if> 
+			<if test="age !=null ">age = #{age} ,</if> 
+			<if test="address !=null">address = #{address} ,</if> 
+			<if test="deptId !=null">dept_id = #{deptId}</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+	<delete id="deleteUserList" parameterType="list">
+		
+		
+		
+	</delete>
+	
 	
 </mapper>
