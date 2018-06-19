@@ -1,5 +1,6 @@
 package com.qfedu.mybatis.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -321,6 +322,20 @@ public class testSelectUser {
 		session.close();
 		System.out.println(u);
 		System.out.println("修改了"+count+"行");
+	}
+	
+	@Test
+	public void testDeleteUserList() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		List<String> ids = new ArrayList<String>();
+		ids.add("33");
+		ids.add("2345");
+		int count = userMapper.deleteUserList(ids);
+		session.commit();
+		session.close();
+		System.out.println("删除了"+count+"条记录");
+		
 	}
 	
 }

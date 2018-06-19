@@ -32,4 +32,6 @@ public interface UserMapper {
 	List<User> selectUserByConditionTrim(User user);
 	
 	int updateUserByConditionTrim(User user);
+	
+	int deleteUserList(List<String> ids);
 }

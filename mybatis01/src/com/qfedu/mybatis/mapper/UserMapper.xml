@@ -15,14 +15,18 @@
 	<select id="selectUser2" parameterType="string" resultMap="userResultMapper">
 		select * from user_c where id = {id}
 	</select>
-	
-	<select id="selectUser" parameterType="string" resultType="User">
-		select
+	<sql id="columnBase">
 			id, 
 			user_name as userName, 
 			age, 
 			address, 
 			dept_id as deptId
+	</sql>
+	
+	
+	<select id="selectUser" parameterType="string" resultType="User">
+		select
+			<include refid="columnBase"></include>
 		from user_c where id=#{id}
 	</select>
 	
@@ -172,10 +176,9 @@
 		WHERE id = #{id}
 	</update>
 	<delete id="deleteUserList" parameterType="list">
-		
-		
-		
+		delete from user_c where id in 
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
 	</delete>
-	
-	
 </mapper>
