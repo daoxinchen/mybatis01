@@ -338,4 +338,45 @@ public class testSelectUser {
 		
 	}
 	
+	/**
+	 * 测试一级缓存：
+	 * 		从下面测试结果可以看到，查询语句一样的话，查询语句只打印了一次
+	 * 		如果查询语句不同，会打印两次查询语句
+	 */
+	@Test
+	public void testSelectUserCacheLevelOne1() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User user1 = userMapper.selectUser("1");
+		System.out.println("结果已查询");
+		User user2 = userMapper.selectUser("1");
+		System.out.println("结果已查询：从缓存中获取数据");
+		
+		session.close();
+		
+		System.out.println("session关闭");
+	}
+	
+	@Test
+	public void testSelectUserCacheLevelOne2() {
+		SqlSession session = MyBatisUtil.getSqlSession();
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		
+		User user1 = userMapper.selectUser("1");
+		System.out.println("结果已查询");
+		
+		user1.setDeptId(3);
+		userMapper.updateUser(user1);
+		System.out.println("刷新缓存");
+		
+		
+		User user2 = userMapper.selectUser("1");
+		System.out.println("重新执行缓存");
+		
+		session.commit();
+		session.close();
+		
+		System.out.println("session关闭");
+	}
 }
