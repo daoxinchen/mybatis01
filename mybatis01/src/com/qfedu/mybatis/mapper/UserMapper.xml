@@ -110,18 +110,20 @@
 		SELECT * from user_c 
 		WHERE dept_id="1"
 		<choose>
-			<when test="address !=null && address !=''">
-				and lower(address) like lower(#{address})lower忽略大小写
+			<when test="address!=null and address!=''">
+				and lower(address) like lower(#{address})<!-- lower忽略大小写 -->
 			</when>
 		</choose>
 		<choose>
-			<when test="user_name !=null && user_name !=''">
+			<when test="userName !=null and userName !=''">
 				and user_name = #{userName}
 			</when>
 		</choose>
-		<otherwise>
-			and age > 50
-		</otherwise>
+		<choose>
+			<otherwise>
+				and age&lt;60
+			</otherwise>
+		</choose>
 	</select>
 	
 </mapper>

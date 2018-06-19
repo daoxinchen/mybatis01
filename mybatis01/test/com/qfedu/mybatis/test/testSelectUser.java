@@ -242,7 +242,7 @@ public class testSelectUser {
 		UserMapper userMapper = session.getMapper(UserMapper.class);
 		
 		User u = new User();
-		u.setAddress("%州%");
+		u.setAddress("%江%");
 		u.setUserName("张居正");
 		
 		List<User> userList = userMapper.selectDeptUserByAddressOrName(u);
