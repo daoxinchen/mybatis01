@@ -1,6 +1,12 @@
 package com.qfedu.mybatis.pojo;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 494118695929930856L;
 	private String id;
 	private String userName;
 	private Integer age;

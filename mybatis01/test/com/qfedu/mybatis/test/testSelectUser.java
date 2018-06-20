@@ -379,4 +379,29 @@ public class testSelectUser {
 		
 		System.out.println("session关闭");
 	}
+	
+	/**
+	 * 测试二级缓存
+	 */
+	@Test
+	public void testSelectUserCacheLevelTwo1() {
+		SqlSession session1 = MyBatisUtil.getSqlSession();
+		UserMapper userMapper1 = session1.getMapper(UserMapper.class);
+		
+		User user1 = userMapper1.selectUser("1");
+		System.out.println("结果已查询");
+		System.out.println(user1);
+		session1.close();
+		
+		SqlSession session2 = MyBatisUtil.getSqlSession();
+		UserMapper userMapper2 = session2.getMapper(UserMapper.class);
+		User user2 = userMapper2.selectUser("1");
+		System.out.println("结果已查询：从缓存中获取数据，缓存命中率是0.5");
+		System.out.println(user2);
+		
+		System.out.println("session关闭");
+		session2.close();
+	}
+	
+ 
 }
